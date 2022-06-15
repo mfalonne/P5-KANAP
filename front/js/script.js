@@ -1,14 +1,23 @@
 main() // fonction qui contien le code de la base
-
+/*
+ * getArticles : la fonction qui va nous permettre de recuperer tout les articles
+ *displayArticles : la fonction qui va permettre d'afficher tout les articles
+ */
 async function main(){
-    const articles = await getArticles() // on declare la fonction getArticles qui nous servira à recuperer les articles
+    const articles = await getArticles() // on declare la fonction getArticles 
     
-    for(article of articles){
-        displayArticle(article) // fonction qui va affiche les articles et on lui passe tout les articles
+    for(article of articles){ // on prend chaque article de la liste articles
+        displayArticle(article)
     }
 
 }
-async function getArticles(){ // appel de la fonction getArticle
+/* fetch : va chercher les informations (articles) grace à l url indiquer
+*il retourne une promesse non resolu, pour attendre que le promesse soit resolu
+* on rajoute un await devant la fonction getArticles
+*await peut etre executer que dans les fonctions async donc on transforme nos fonction 
+*en fonction async en rajoutant async devant
+*/
+async function getArticles(){ // on cree ou appel de la fonction getArticle
     let response = await fetch("http://localhost:3000/api/products");
     if(response.ok){
         return response.json();
@@ -16,7 +25,10 @@ async function getArticles(){ // appel de la fonction getArticle
         return response.error;
     }
 }
+/* appel ou cree la fonction displayArticle avec son argument article*/
+
 function displayArticle(article){ 
+    /* on cree les elts et on les attributs des valeurs */
   var baliseA = document.createElement("a");
   baliseA.setAttribute("href", "./product.html?id="+article._id)
 
