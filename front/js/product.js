@@ -1,9 +1,7 @@
 main();
 
 /*
- *main : fonction où va s'exeter le techargement de la page
  *getArticleId : fonction qui va nous permettre de recuperer url avec id de chaque article
- *getArticle(articleId): fonction qui vas nous permettre de faire la requette http (pour recuperer chaque article/son id)
  *hydrateArticle(article) : fonction qui nous permet d'afficher l'article
  */
 
@@ -13,14 +11,18 @@ async function main() {
     
     hydrateArticle(article);
   }
+  /*
+  URL(): interface utiliser pour analyser,construire,normaliser et encoder des URL
+  searchParams: nous permet de lire l'id conternu dans l'url
+  getArticleId(): nous permet de recuperer l'id decodé dans l'url de chaque article cliquer*/
 
-  //searchparams nous permet de recuperer url avec id de chaque article
 
   function getArticleId() {
     return new URL(location.href).searchParams.get("id");
   }
+  //getArticles(articleId): recupère l'article clicker dans l'api gràce à son id en format json (texte)
+
   async function getArticles(articleId) {
-    // on cree ou appel de la fonction getArticle
     let response = await fetch(`http://localhost:3000/api/products/${articleId}`);
     if (response.ok) {
       return response.json();
@@ -88,7 +90,7 @@ async function main() {
         };
         addkanap(article);
       } else {
-        alert("Veuillez sélectionner une couleur et une quantité inferieur à 100");
+        alert("Veuillez sélectionner une couleur et une quantité inferieur ou egal à 100");
       }
     });
   }
@@ -124,6 +126,7 @@ function afterAdd() {
       var finded = false;
       articleTableau.forEach((element) => {
         if (element.id == article.id && element.color == article.color) {
+          //parseInt() analyse une chaîne de caractère fournie en argument et renvoie un entier exprimé dans une base donnée.
           var newQte = parseInt(element.qte, 10) + parseInt(article.qte, 10);
           finded = true;
           if (element.qte == 100) {
@@ -142,8 +145,8 @@ function afterAdd() {
         
       }
     }
-    /* localStorage.setItem : permet de stocker les données (valeur) qui sont dans articleTableau dans une clé (ici panier)
-     *JSON.stringify : transforme les données en chaine de caractères
+    /* localStorage.setItem : ajout d'article dans le local storage
+     *JSON.stringify : transforme les données javascript en chaine de caractères
      */
     localStorage.setItem("panier", JSON.stringify(articleTableau));
   }
